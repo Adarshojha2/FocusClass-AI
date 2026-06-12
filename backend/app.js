@@ -4,8 +4,12 @@ const fs = require("fs");
 const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
+const connectDB = require("./config/db");
 
 const app = express();
+
+// Connect to database
+connectDB();
 
 // Middlewares
 app.use(express.json());

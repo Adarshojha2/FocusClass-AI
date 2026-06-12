@@ -363,7 +363,9 @@ const TeacherDashboard = ({ user, onLogout, onNavigate, onUpdateUser }) => {
   }, 0);
   const principalBroadcasts = messages.filter(m => m.recipientRole === "teacher" || m.recipientRole === "all");
 
-  const avatarUrl = user.photoUrl ? `${import.meta.env.VITE_API_URL || "http://localhost:5000"}${user.photoUrl}?h=${user.photoHash || ""}` : "";
+  const avatarUrl = user.photoUrl
+    ? (user.photoUrl.startsWith("data:") ? user.photoUrl : `${import.meta.env.VITE_API_URL || "http://localhost:5000"}${user.photoUrl}?h=${user.photoHash || ""}`)
+    : "";
 
   return (
     <div className="page-shell">

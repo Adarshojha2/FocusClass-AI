@@ -93,7 +93,9 @@ const ProfilePage = ({ user, onBack, onUpdateUser }) => {
 
   const visiblePhotoUrl = (photoFile && photoPreview)
     ? photoPreview
-    : (user?.photoUrl ? `${backendBaseUrl}${user.photoUrl}?h=${user.photoHash || ""}` : "");
+    : (user?.photoUrl
+        ? (user.photoUrl.startsWith("data:") ? user.photoUrl : `${backendBaseUrl}${user.photoUrl}?h=${user.photoHash || ""}`)
+        : "");
 
   return (
     <div className="page-shell">

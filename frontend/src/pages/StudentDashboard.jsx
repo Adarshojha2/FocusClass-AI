@@ -651,7 +651,9 @@ const StudentDashboard = ({ user, onLogout, onNavigate, onUpdateUser }) => {
   const pendingAssignments = assignments.filter(a => !a.submissions?.some(s => s.student === userId || s.student?._id === userId));
   const principalBroadcasts = messages.filter(m => m.recipientRole === "student" || m.recipientRole === "all");
 
-  const avatarUrl = user.photoUrl ? `${import.meta.env.VITE_API_URL || "http://localhost:5000"}${user.photoUrl}?h=${user.photoHash || ""}` : "";
+  const avatarUrl = user.photoUrl
+    ? (user.photoUrl.startsWith("data:") ? user.photoUrl : `${import.meta.env.VITE_API_URL || "http://localhost:5000"}${user.photoUrl}?h=${user.photoHash || ""}`)
+    : "";
   const selectedNoteDetails = notes.find(n => n._id === selectedNoteId);
 
   return (

@@ -265,23 +265,16 @@ const uploadProfilePhoto = async (req, res) => {
       return res.status(400).json({ message: "Profile photo has already been uploaded once." });
     }
 
-    const fs = require("fs");
-    const path = require("path");
-
-    const uploadsDir = path.join(__dirname, "..", "uploads");
-    if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
-
-    const fileName = `profile-${user._id}.jpg`;
-    const filePath = path.join(uploadsDir, fileName);
-
-    fs.writeFileSync(filePath, photoFile.buffer);
-
     const hash = computeImageHash(photoFile.buffer);
     if (!hash) {
       return res.status(500).json({ message: "Unable to process uploaded photo." });
     }
 
-    user.photoUrl = `/uploads/${fileName}`;
+    // Convert image buffer to base64 Data URL for serverless compatibility (zero disk requirement)
+    const base64Image = photoFile.buffer.toString("base64");
+    const dataUrl = `data:${photoFile.mimetype || "image/jpeg"};base64,${base64Image}`;
+
+    user.photoUrl = dataUrl;
     user.photoUploaded = true;
     user.photoHash = hash;
 
