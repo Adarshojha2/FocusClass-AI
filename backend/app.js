@@ -14,10 +14,14 @@ connectDB();
 // Middlewares
 app.use(express.json());
 app.use(cors());
-// Expose uploads directory statically before helmet to avoid cross-origin header blocks
+// Expose uploads directory statically with explicit cross-origin headers to prevent browser blocks
 const uploadsDir = path.join(__dirname, "uploads");
-if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir, { recursive: true });
+try {
+  if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+  }
+} catch (err) {
+  console.warn("Skipping uploads folder creation in read-only serverless filesystem:", err.message);
 }
 app.use("/uploads", (req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
