@@ -28,10 +28,10 @@ const connectDB = async () => {
     // Seed Principal account if it does not exist
     const User = require("../models/user");
     const bcrypt = require("bcryptjs");
-    const principalEmail = "principal@focusclass.com";
+    const principalEmail = "principalfocosclass@gmail.com";
     const principalExists = await User.findOne({ email: principalEmail });
     if (!principalExists) {
-      const hashedPassword = await bcrypt.hash("Principal123!", 10);
+      const hashedPassword = await bcrypt.hash("principal", 10);
       await User.create({
         name: "Principal Administration",
         email: principalEmail,
@@ -41,9 +41,9 @@ const connectDB = async () => {
         lifeProfile: "Principal and Chief Executive Administrator of FocusClass AI Academy.",
         isDashboardActive: true,
         photoUploaded: true,
-        photoUrl: "/uploads/profile-principal.jpg"
+        photoUrl: ""
       });
-      console.log("Seeded default Principal user: principal@focusclass.com / Principal123!");
+      console.log("Seeded default Principal user: principalfocosclass@gmail.com / principal");
     }
 
   } catch (error) {

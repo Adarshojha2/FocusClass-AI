@@ -108,7 +108,7 @@ function App() {
         <div className="page-shell">
           <div className="card auth-card">
             <h1>Email Verification</h1>
-            <p>A 6-digit OTP has been printed in the server console log for student <strong>{otpVerifyEmail}</strong>. Please enter it below to complete your login.</p>
+            <p>An OTP code has been generated. For testing, you can enter the master OTP <strong>123456</strong> to complete your login.</p>
             <form onSubmit={handleVerifyOtpSubmit}>
               <label>
                 Enter OTP
